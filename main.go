@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"net"
@@ -15,7 +16,7 @@ func main() {
 	cfg = parseConfig()
 
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	l, err := net.Listen("tcp", ":"+cfg.Port)
+	l, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
 	if err != nil {
 		log.Panic(err)
 	}

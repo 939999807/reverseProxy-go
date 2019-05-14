@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	Port  string
+	Port int `yaml:"port"`
 	Route map[string]string
 }
 
@@ -21,7 +21,10 @@ func parseConfig() Config {
 	}
 	yamlFile, err := ioutil.ReadFile(dir + "/conf/config.yaml")
 	if err != nil {
-		log.Printf("conf/config.yaml not found err #%v ", err)
+		yamlFile, err = ioutil.ReadFile("conf/config.yaml")
+		if err != nil {
+			log.Fatalf("conf/config.yaml not found err #%v ", err)
+		}
 	}
 	log.Println(string(yamlFile))
 	err = yaml.Unmarshal(yamlFile, &cfg)
