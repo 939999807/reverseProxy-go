@@ -7,15 +7,17 @@ import (
 )
 
 type Config struct {
-	Port   string
-	Remote string
-	Ip     string
-	Dns    []string
+	Port  string
+	Route map[string]string
 }
 
 func parseConfig() Config {
 	cfg := Config{}
-	yamlFile, err := ioutil.ReadFile("conf/config.yaml")
+	//dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	//if err != nil {
+	//	log.Fatalf("filepath not found err #%v ", err)
+	//}
+	yamlFile, err := ioutil.ReadFile(dir + "/conf/config.yaml")
 	if err != nil {
 		log.Printf("conf/config.yaml not found err #%v ", err)
 	}
