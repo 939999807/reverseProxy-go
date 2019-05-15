@@ -48,8 +48,8 @@ func handleClientRequest(client net.Conn) {
 	req, err := http.ReadRequest(reader)
 	if err != nil {
 		log.Println(err)
+		return
 	}
-
 	var domain string
 	i := strings.IndexByte(req.Host, ':')
 	if i < 0 {
