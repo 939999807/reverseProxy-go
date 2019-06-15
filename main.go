@@ -11,6 +11,7 @@ import (
 var cfg Config
 
 func main() {
+	cfg = parseConfig()
 	director := func(req *http.Request) {
 		var domain string
 		i := strings.IndexByte(req.Host, ':')
@@ -24,13 +25,14 @@ func main() {
 			log.Println(domain + " not found")
 			return
 		}
+		req.URL.Scheme = "http"
 		req.URL.Host = fmt.Sprintf("%s:%s", domain, port)
 	}
 	proxy := &httputil.ReverseProxy{Director: director}
+	log.Println("[reverseProxy] service listening at", cfg.Port)
 	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), proxy)
 	if err != nil {
 		log.Panic(err)
 		return
 	}
-	log.Println("Listening to {}", cfg.Port)
 }
