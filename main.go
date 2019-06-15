@@ -32,4 +32,5 @@ func main() {
 		log.Panic(err)
 		return
 	}
+	log.Println("Listening to {}", cfg.Port)
 }
